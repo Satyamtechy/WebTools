@@ -1,0 +1,16 @@
+.fixed-container {
+    position: fixed;  /* Fixed position */
+    top: 0;
+    left: 0;
+    width: 100%;    /* Adjust width as needed */
+    height: 100%;    /* Full height */
+    background-color: #f5f5f5;  /* Light background color */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border-right: 1px solid #ccc; /* Optional: border for a cleaner look */
+}
+
+/* Style the scrollable map content */
+.scrollable-map {
+    padding: 20px;   /* Add some padding for better visibility */
+    /* You can add other styles as needed */
+}

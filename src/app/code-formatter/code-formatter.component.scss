@@ -1,0 +1,48 @@
+.code{
+    height: 100vh;
+    width: 100%;
+    .pre-code{
+        height: 100%;
+        border: 1px solid greenyellow;
+    }
+    .btns{
+        border: 1px solid greenyellow;
+    }
+    .post-code{
+        border: 1px solid greenyellow;
+    }
+}
+
+.pre-code{
+    height: 100%;
+    overflow-y: scroll;
+    .line_num{
+        background-color: #E8E8E8;
+        margin-top: 2px;
+    }
+    textarea{
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        resize: none;
+        outline: none;
+        border: none;
+        white-space: pre-wrap; /* Preserve line breaks */
+    }
+}
+.post-code{
+    height: 100%;
+    overflow-y: scroll;
+    .line_num{
+        background-color: #E8E8E8;
+        margin-top: 2px;
+    }
+    textarea{
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        resize: none;
+        outline: none;
+        border: none;
+    }
+}

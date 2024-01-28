@@ -1,0 +1,31 @@
+<div class="code container-fluid">
+    <div class="row d-flex h-100">
+        <div class="pre-code col-5">
+            <div class="row h-100">
+                <div class="line_num col-1 d-flex justify-content-start flex-column">
+                    <p class="m-0" *ngFor="let line of lines">{{line}}</p>
+                </div>
+                <div class="col-11 m-0 p-0">
+                    <textarea [(ngModel)]="content" (input)="updateLineNumber()" (paste)="onPaste($event)"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="btns col-2">
+            <div class="row h-100">
+                <div class="line_num col-12 d-flex justify-content-start flex-column">
+                    <button type="button" (click)="formatCode()">Format</button>
+                </div>
+            </div>
+        </div>
+        <div class="post-code col-5">
+            <div class="row h-100">
+                <div class="line_num col-1 d-flex justify-content-start flex-column">
+                    <p class="m-0"></p>
+                </div>
+                <div class="col-11 m-0 p-0">
+                    <textarea [value]="formattedCode"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
