@@ -6,14 +6,14 @@
                     <p class="m-0" *ngFor="let line of lines">{{line}}</p>
                 </div>
                 <div class="col-11 m-0 p-0">
-                    <textarea [(ngModel)]="content" (input)="updateLineNumber()" (paste)="onPaste($event)"></textarea>
+                    <textarea [(ngModel)]="content"></textarea>
                 </div>
             </div>
         </div>
         <div class="btns col-2">
-            <div class="row h-100">
+            <div class="row align-item-center h-100">
                 <div class="line_num col-12 d-flex justify-content-start flex-column">
-                    <button type="button" (click)="formatCode()">Format</button>
+                    <button class="button-10" type="button">Format</button>
                 </div>
             </div>
         </div>
