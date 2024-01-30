@@ -7,7 +7,7 @@ import { HistogramComponent } from './histogram/histogram.component';
 
 export const routes: Routes = [
     {
-        path:'fonts',component:FontsComponent
+        path:'icons',component:FontsComponent
     },
     {
         path:'code-formatter',component:CodeFormatterComponent

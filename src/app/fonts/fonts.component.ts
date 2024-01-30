@@ -12,7 +12,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 })
 export class FontsComponent implements OnInit{
 
-  show: boolean=true;
+  show: boolean=false;
   svg: boolean = false;
   jsx: boolean = false;
   strokeWidth: number = 2;
