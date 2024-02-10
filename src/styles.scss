@@ -1,4 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+html, body { 
+    height: 100%; 
+}
+body { 
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
 .d-flex{
     display: flex;
 }
@@ -53,10 +59,9 @@
 .w-10{
     width: 10%;
 }
-
 .sm-font{
     font-size: small;
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.lg-font{
+    font-size: x-large;
+}

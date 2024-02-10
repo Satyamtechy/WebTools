@@ -1,8 +1,13 @@
-import { Component, Inject, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PrettierService } from './services/prettier.service';
-
+import 'prismjs';
+import 'prismjs/components/prism-javascript';
+import * as monaco from 'monaco-editor';
+import { MonacoEditorService } from './services/monaco-editor-service.service';
+import { first } from 'rxjs';
+declare var Prism: any;
 @Component({
   selector: 'app-code-formatter',
   standalone: true,
@@ -10,17 +15,41 @@ import { PrettierService } from './services/prettier.service';
   templateUrl: './code-formatter.component.html',
   styleUrl: './code-formatter.component.scss'
 })
-export class CodeFormatterComponent implements OnInit{
+export class CodeFormatterComponent implements OnInit, AfterViewInit{
+  @ViewChild('codeTextarea') codeTextarea!: ElementRef;
   lines: number[] = [];
   content: string = '';
   check:boolean=false;
   maxChar:number=10;
   formattedCode: string = '';
-
-  constructor(@Inject(PrettierService)private prettyService:any){}
-  ngOnInit(): void {
+  isErrorDetected: boolean = false;
+  editor!: monaco.editor.IStandaloneCodeEditor;
+  public _editor: any;
+  options:any
+  @ViewChild('editorContainer', { static: true }) _editorContainer!: ElementRef;
+  constructor(@Inject(PrettierService)private prettyService:any,@Inject(MonacoEditorService)private monacoEditorService:any){}
+  ngAfterViewInit(): void {
+    this.initMonaco();
   }
 
+  ngOnInit(): void {
+    // this.monacoEditorService.load()
+  }
+  private initMonaco(): void {
+    if(!this.monacoEditorService.loaded) {
+      this.monacoEditorService.loadingFinished.pipe(first()).subscribe(() => {
+        this.initMonaco();
+      });
+      return;
+    }
+
+    this._editor = monaco.editor.create(
+      this._editorContainer.nativeElement,
+      this.options
+    );
+  }
+
+ 
 
   // updateLineNumber() {
   //   if (this.content !== null && this.content !== undefined) {

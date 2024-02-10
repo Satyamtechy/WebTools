@@ -1,0 +1,7 @@
+<div class="container-fluid">
+    <div class="collections d-flex flex-wrap p-4">
+        <mat-card class="card-item" *ngFor="let loader of loaders; let i = index">
+            <app-loader-card class="h-100" [html]="loader.sanitizedLoaderContent" [css]="loader.css" (click)="popup()"></app-loader-card>
+        </mat-card>
+    </div>
+</div>

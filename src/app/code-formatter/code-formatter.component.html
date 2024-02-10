@@ -3,10 +3,10 @@
         <div class="pre-code col-5">
             <div class="row h-100">
                 <div class="line_num col-1 d-flex justify-content-start flex-column">
-                    <p class="m-0" *ngFor="let line of lines">{{line}}</p>
+                    <p class="m-0" *ngFor="let _ of [].constructor(content.split('\n').length); let i = index">{{i+1}}</p>
                 </div>
                 <div class="col-11 m-0 p-0">
-                    <textarea [(ngModel)]="content"></textarea>
+                    <textarea class="editor-container" #editorContainer></textarea>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
                     <p class="m-0"></p>
                 </div>
                 <div class="col-11 m-0 p-0">
-                    <textarea [value]="formattedCode"></textarea>
+                    <textarea></textarea>
                 </div>
             </div>
         </div>
