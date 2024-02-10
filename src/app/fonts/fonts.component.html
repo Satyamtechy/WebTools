@@ -123,8 +123,9 @@
                                 <div class="col-7 d-flex align-items-center">
                                     <button class="button" type="button">See in action</button>
                                     <div class="button_container w-100 mx-2">
-                                        <button type="button" class="button_2 align-items-center justify-content-around p-0" (click)="animateButton($event)">
-                                            <span class="w-80 btn_title" [cdkCopyToClipboard]="svgCopy">Copy SVG</span>
+                                        <button type="button" class="button_2 align-items-center justify-content-around p-0" (click)="animateButton($event)"
+                                        [cdkCopyToClipboard]="svgCopy">
+                                            Copy SVG
                                             <span class="up-arrow" (click)="showSubMenu('SVG')">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up">
@@ -142,8 +143,8 @@
                                         </div>
                                     </div>
                                     <div class="button_container w-100 mx-2">
-                                        <button type="button" class="button_2 align-items-center justify-content-around p-0">
-                                            <span class="w-80 btn_title">Copy JSX</span>
+                                        <button type="button" class="button_2 align-items-center justify-content-around p-0" (click)="animateButton($event)">
+                                            Copy JSX
                                             <span class="up-arrow" (click)="showSubMenu('JSX')">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up">
