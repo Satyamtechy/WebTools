@@ -10,9 +10,9 @@ export const routes: Routes = [
     {
         path:'icons',component:FontsComponent
     },
-    {
-        path:'code-formatter',component:CodeFormatterComponent
-    },
+    // {
+    //     path:'code-formatter',component:CodeFormatterComponent
+    // },
     {
         path:'css-loaders',component:CssLoadersComponent
     },
