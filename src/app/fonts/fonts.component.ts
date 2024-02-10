@@ -32,6 +32,8 @@ export class FontsComponent implements OnInit{
   searchIcons:string = '';
   showCategoryName:boolean = false;
   categoryName: string = '';
+  animate: boolean = false;
+
   constructor( private fontService:FontsService,private sanitizer: DomSanitizer){
 
   }
@@ -39,6 +41,17 @@ export class FontsComponent implements OnInit{
     this.getAllIcons();
     this.getCategories();
   }
+
+  animateButton(e: MouseEvent) {
+    e.preventDefault();
+    const target = e.target as HTMLElement;
+    target.classList.remove('animate');
+    target.classList.add('animate');
+    setTimeout(() => {
+      target.classList.remove('animate');
+    }, 500);
+  }
+
   getAllIcons(){
     this.fontService.getAllIcons().subscribe({
       next:(data:any) => {
