@@ -7,9 +7,6 @@ import { CssLoadersComponent } from './css-loaders/css-loaders.component';
 
 export const routes: Routes = [
     {
-        path: '', redirectTo: '', pathMatch: 'full',
-    },
-    {
         path:'icons',component:FontsComponent
     },
     // {
