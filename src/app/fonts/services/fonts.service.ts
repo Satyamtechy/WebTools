@@ -10,10 +10,10 @@ export class FontsService {
   constructor(private http:HttpClient) { }
 
   getAllIcons(): Observable<any>{
-    return this.http.get<any>('https://localhost:7046/api/Icons/GetAllIcons')
+    return this.http.get<any>('https://webtools-pioz.onrender.com/api/Icons/GetAllIcons')
   }
   getCategories(): Observable<any>{
-    return this.http.get<any>('https://localhost:7046/api/Icons/GetCategories')
+    return this.http.get<any>('https://webtools-pioz.onrender.com/api/Icons/GetCategories')
   }
   getCategoryIcon(category:any): Observable<any>{
     const httpOptions = {
@@ -21,6 +21,6 @@ export class FontsService {
         'Content-Type': 'application/json'
       })
     };
-    return this.http.post<any>('https://localhost:7046/api/Icons/GetCategoryIcons', category ,httpOptions)
+    return this.http.post<any>('https://webtools-pioz.onrender.com/api/Icons/GetCategoryIcons', category ,httpOptions)
   }
 }
