@@ -10,6 +10,6 @@ export class LoadersService {
   constructor(private http:HttpClient) { }
 
   getLoaders(): Observable<any>{
-    return this.http.get<any>('https://localhost:7046/api/LoadersControllers/GetAllLoaders')
+    return this.http.get<any>('https://webtools-pioz.onrender.com/api/LoadersControllers/GetAllLoaders')
   }
 }
