@@ -11,16 +11,16 @@
       <span class="logo-text"><span class="logo-accent">WebDev</span> Tools</span>
     </a>
 
-    <nav class="nav" aria-label="Main navigation">
-      <a routerLink="/icons" routerLinkActive="active" class="nav-link">Icons</a>
-      <a routerLink="/css-loaders" routerLinkActive="active" class="nav-link">CSS Loaders</a>
-      <button class="nav-link" [class.active]="toolsOpen()" (click)="toggleTools()">
-        Tools
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="m6 9 6 6 6-6"/>
-        </svg>
-      </button>
-    </nav>
+    @if (!isHome()) {
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav-link tools-btn" [class.active]="toolsOpen()" (click)="toggleTools()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/>
+          </svg>
+          All Tools
+        </button>
+      </nav>
+    }
 
     <div class="header-actions">
       <div class="search-trigger" (click)="openPalette()">
@@ -56,6 +56,11 @@
       </button>
     </div>
     <div class="drawer-body">
+      <div class="drawer-category">
+        <h4>Browse</h4>
+        <a routerLink="/icons" routerLinkActive="active" (click)="closeTools()">Icons</a>
+        <a routerLink="/css-loaders" routerLinkActive="active" (click)="closeTools()">CSS Loaders</a>
+      </div>
       <div class="drawer-category">
         <h4>Transform</h4>
         <a routerLink="/transformer" routerLinkActive="active" (click)="closeTools()">Snippet Transformer</a>

@@ -18,7 +18,7 @@
   height: 64px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: var(--space-4);
 }
 
 .logo {
@@ -27,6 +27,8 @@
   gap: var(--space-3);
   font-size: 18px;
   font-weight: 600;
+  text-decoration: none;
+  color: var(--color-text);
 
   svg {
     color: var(--color-primary);
@@ -49,6 +51,7 @@
   font-size: 14px;
   font-weight: 500;
   color: var(--color-text-secondary);
+  text-decoration: none;
   transition: var(--transition);
 
   &:hover,
@@ -56,6 +59,16 @@
     background: var(--color-primary-light);
     color: var(--color-primary);
   }
+}
+
+.tools-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font);
 }
 
 .nav-dropdown {
@@ -218,6 +231,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  margin-left: auto;
 }
 
 .search-trigger {

@@ -86,5 +86,5 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/transformer/transformer.component').then((m) => m.TransformerComponent),
   },
-  { path: '', redirectTo: 'icons', pathMatch: 'full' },
+  { path: '', loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent) },
 ];

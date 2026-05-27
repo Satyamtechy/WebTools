@@ -1,6 +1,8 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, ChangeDetectionStrategy, DestroyRef, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ThemeService } from '@core/services/theme.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -11,10 +13,20 @@ import { ThemeService } from '@core/services/theme.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly router = inject(Router);
   readonly themeService = inject(ThemeService);
   readonly toolsOpen = signal(false);
+  readonly isHome = signal(this.router.url === '/');
 
   private closeTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  constructor() {
+    this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe((e) => this.isHome.set(e.urlAfterRedirects === '/'));
+  }
 
   openPalette(): void {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }));
