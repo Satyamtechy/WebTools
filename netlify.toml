@@ -1,5 +1,5 @@
 [build]
-  command = "npx ng build --configuration production"
+  command = "echo '//registry.npmjs.org/:_authToken=' > ~/.npmrc && npm install --registry https://registry.npmjs.org/ && npx ng build --configuration production"
   publish = "dist/web-tools/browser"
 
 # SPA fallback — all routes serve index.html
