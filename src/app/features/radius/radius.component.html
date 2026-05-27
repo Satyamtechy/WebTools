@@ -1,0 +1,58 @@
+<div class="radius-tool">
+  <div class="controls">
+    <h2>Border Radius</h2>
+
+    <div class="link-toggle">
+      <label>
+        <input type="checkbox" [ngModel]="linked()" (ngModelChange)="linked.set($event)" />
+        Link corners
+      </label>
+    </div>
+
+    <div class="sliders">
+      @for (corner of [['tl','Top Left'],['tr','Top Right'],['br','Bottom Right'],['bl','Bottom Left']]; track corner[0]) {
+        <div class="slider-row">
+          <label>{{ corner[1] }}</label>
+          <input type="range" min="0" max="100"
+            [ngModel]="$any(this)[corner[0]]()"
+            (ngModelChange)="setCorner($any(corner[0]), $event)" />
+          <span class="value">{{ $any(this)[corner[0]]() }}px</span>
+        </div>
+      }
+    </div>
+
+    <h3>Dimensions</h3>
+    <div class="slider-row">
+      <label>Width</label>
+      <input type="range" min="50" max="400" [ngModel]="width()" (ngModelChange)="width.set($event)" />
+      <span class="value">{{ width() }}px</span>
+    </div>
+    <div class="slider-row">
+      <label>Height</label>
+      <input type="range" min="50" max="400" [ngModel]="height()" (ngModelChange)="height.set($event)" />
+      <span class="value">{{ height() }}px</span>
+    </div>
+
+    <h3>Presets</h3>
+    <div class="presets">
+      @for (p of presets; track p.name) {
+        <button (click)="applyPreset(p)">{{ p.name }}</button>
+      }
+    </div>
+
+    <div class="output">
+      <code>{{ cssValue() }}</code>
+      <button class="copy-btn" (click)="copy()">
+        {{ copied() ? '✓ Copied' : 'Copy' }}
+      </button>
+    </div>
+  </div>
+
+  <div class="preview-area">
+    <div class="preview-box"
+      [style.width.px]="width()"
+      [style.height.px]="height()"
+      [style.border-radius]="tl() + 'px ' + tr() + 'px ' + br() + 'px ' + bl() + 'px'">
+    </div>
+  </div>
+</div>

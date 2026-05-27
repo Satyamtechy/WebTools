@@ -1,7 +1,38 @@
-<div class="container-fluid">
-    <div class="collections d-flex flex-wrap p-4">
-        <mat-card class="card-item" *ngFor="let loader of loaders; let i = index">
-            <app-loader-card class="h-100" [html]="loader.sanitizedLoaderContent" [css]="loader.css" (click)="popup()"></app-loader-card>
-        </mat-card>
-    </div>
-</div>
+<section class="loaders-page">
+  <div class="content-header">
+    <h2 class="page-title">CSS Loaders <span class="badge">{{ loaders().length }}</span></h2>
+    <p class="page-description">Animated CSS loading indicators. Click any to copy the code.</p>
+  </div>
+
+  <nav class="category-tabs" aria-label="Loader categories">
+    @for (cat of categories; track cat) {
+      <button
+        class="tab-btn"
+        [class.active]="activeCategory() === cat"
+        (click)="selectCategory(cat)"
+      >{{ cat }}</button>
+    }
+  </nav>
+
+  <div class="loader-grid">
+    @for (loader of loaders(); track $index; let i = $index) {
+      <div
+        class="loader-card"
+        [style.animation-delay]="(i % 30) * 30 + 'ms'"
+        (click)="openDetail(loader)"
+      >
+        <app-loader-card [html]="loader.html" [css]="loader.css" [loaderId]="loader.id" />
+        <span class="card-label">{{ loader.id }}</span>
+      </div>
+    }
+  </div>
+</section>
+
+@if (selectedLoader(); as loader) {
+  <app-loader-detail-modal
+    [html]="loader.html"
+    [css]="loader.css"
+    [loaderId]="loader.id"
+    (closed)="closeDetail()"
+  />
+}

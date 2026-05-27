@@ -1,0 +1,48 @@
+:host { display: block; padding: var(--space-8); max-width: 1200px; margin: 0 auto; }
+
+.page-title { font-size: 2rem; color: var(--color-text); margin-bottom: var(--space-6); }
+
+.layout { display: grid; grid-template-columns: 280px 1fr; gap: var(--space-8); @media (max-width: 768px) { grid-template-columns: 1fr; } }
+
+.sidebar {
+  h3 { font-size: 0.85rem; color: var(--color-text-secondary); text-transform: uppercase; margin-bottom: var(--space-3); }
+}
+
+.pair-btn {
+  display: flex; flex-direction: column; gap: 2px; width: 100%;
+  padding: var(--space-3) var(--space-4); margin-bottom: var(--space-2);
+  border-radius: var(--radius-md); border: 1px solid var(--color-border);
+  background: var(--color-surface); cursor: pointer; text-align: left;
+  &.active { border-color: var(--color-primary); background: var(--color-primary-alpha, rgba(99, 102, 241, 0.08)); }
+  .pair-heading { font-weight: 700; font-size: 0.9rem; color: var(--color-text); }
+  .pair-body { font-size: 0.75rem; color: var(--color-text-secondary); }
+}
+
+.content { display: flex; flex-direction: column; gap: var(--space-6); }
+
+.preview {
+  padding: var(--space-8); border-radius: var(--radius-lg); border: 1px solid var(--color-border); background: var(--color-surface);
+  h2 { margin-bottom: var(--space-4); color: var(--color-text); line-height: 1.2; }
+  p { color: var(--color-text-secondary); line-height: 1.6; }
+}
+
+.controls { display: flex; flex-direction: column; gap: var(--space-4); }
+
+.control-group {
+  label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--color-text); margin-bottom: var(--space-2); }
+  input[type="text"], textarea {
+    width: 100%; padding: var(--space-3); border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); font-size: 0.9rem;
+  }
+  textarea { resize: vertical; min-height: 60px; }
+  input[type="range"] { width: 100%; }
+}
+
+.sliders { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); @media (max-width: 480px) { grid-template-columns: 1fr; } }
+
+.copy-btn {
+  align-self: flex-start; padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-sm); border: none;
+  background: var(--color-primary); color: #fff; font-weight: 600; cursor: pointer;
+  &:hover { opacity: 0.9; }
+}

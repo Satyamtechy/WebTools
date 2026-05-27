@@ -1,0 +1,72 @@
+<div class="tester-page">
+  <header class="page-header">
+    <h1>Responsive Breakpoint Tester</h1>
+    <p class="subtitle">Preview any URL across device sizes</p>
+  </header>
+
+  <div class="controls">
+    <div class="url-bar">
+      <input
+        type="url"
+        class="url-input"
+        placeholder="Enter URL (e.g. https://example.com)"
+        [ngModel]="url()"
+        (ngModelChange)="url.set($event)"
+        (keydown.enter)="loadUrl()"
+      />
+      <button class="btn-primary" (click)="loadUrl()">Load</button>
+    </div>
+
+    <div class="presets">
+      @for (preset of presets; track preset.name) {
+        <button
+          class="preset-btn"
+          [class.active]="activePreset() === preset.name"
+          (click)="selectPreset(preset)"
+        >
+          {{ preset.name }}
+          <span class="preset-size">{{ preset.width }}×{{ preset.height }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="custom-controls">
+      <label class="control-group">
+        <span>W</span>
+        <input type="number" [ngModel]="width()" (ngModelChange)="width.set($event); activePreset.set('')" min="200" max="3840" />
+      </label>
+      <label class="control-group">
+        <span>H</span>
+        <input type="number" [ngModel]="height()" (ngModelChange)="height.set($event); activePreset.set('')" min="200" max="3840" />
+      </label>
+      <button class="btn-icon" (click)="rotate()" title="Rotate (swap width/height)">⟲</button>
+      <label class="control-group zoom-group">
+        <span>Zoom {{ (zoom() * 100).toFixed(0) }}%</span>
+        <input type="range" min="0.25" max="1.5" step="0.05" [ngModel]="zoom()" (ngModelChange)="zoom.set($event)" />
+      </label>
+    </div>
+  </div>
+
+  <div class="viewport-container">
+    <div class="dimension-label">{{ width() }} × {{ height() }}px &#64; {{ (zoom() * 100).toFixed(0) }}%</div>
+    @if (loadedUrl()) {
+      <div class="iframe-wrapper" [style.width.px]="width() * zoom()" [style.height.px]="height() * zoom()">
+        <iframe
+          [src]="safeUrl()"
+          [style.width.px]="width()"
+          [style.height.px]="height()"
+          [style.transform]="'scale(' + zoom() + ')'"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+          (error)="onIframeError()"
+        ></iframe>
+      </div>
+      @if (iframeError()) {
+        <div class="error-msg">
+          ⚠️ This site may block embedding via X-Frame-Options or Content-Security-Policy. Try a different URL.
+        </div>
+      }
+    } @else {
+      <div class="placeholder">Enter a URL above and click Load to preview</div>
+    }
+  </div>
+</div>

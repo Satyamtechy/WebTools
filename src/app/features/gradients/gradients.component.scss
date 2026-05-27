@@ -1,0 +1,47 @@
+:host { display: block; padding: var(--space-8); max-width: 1200px; margin: 0 auto; }
+.tool-header { margin-bottom: var(--space-8); h1 { font-size: 2rem; color: var(--color-text); } p { color: var(--color-text-secondary); margin-top: var(--space-2); } }
+
+.layout { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); margin-bottom: var(--space-6); @media (max-width: 768px) { grid-template-columns: 1fr; } }
+
+.preview-box { min-height: 300px; border-radius: var(--radius-lg); border: 1px solid var(--color-border); }
+
+.controls { display: flex; flex-direction: column; gap: var(--space-5); }
+
+.control-group {
+  label { display: block; color: var(--color-text); font-size: 0.85rem; font-weight: 500; margin-bottom: var(--space-2); }
+  input[type="range"] { width: 100%; }
+}
+
+.type-toggle {
+  display: flex; gap: var(--space-2);
+  button {
+    padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); border: 1px solid var(--color-border);
+    background: var(--color-surface); color: var(--color-text); cursor: pointer; text-transform: capitalize;
+    &.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+  }
+}
+
+.presets { display: flex; flex-wrap: wrap; gap: var(--space-2);
+  button { padding: var(--space-1) var(--space-3); border-radius: var(--radius-sm); border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); cursor: pointer; font-size: 0.8rem; }
+}
+
+.stop-row {
+  display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2);
+  input[type="color"] { width: 36px; height: 36px; border: none; border-radius: var(--radius-sm); cursor: pointer; padding: 0; }
+  input[type="range"] { flex: 1; }
+  .stop-pos { font-size: 0.8rem; color: var(--color-text-secondary); width: 35px; }
+  .remove-btn { background: none; border: none; color: var(--color-text-secondary); font-size: 1.2rem; cursor: pointer; }
+}
+
+.add-btn, .random-btn {
+  padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); border: 1px solid var(--color-border);
+  background: var(--color-surface); color: var(--color-text); cursor: pointer;
+}
+.random-btn { background: var(--color-primary-light); color: var(--color-primary); font-weight: 500; }
+
+.output {
+  display: flex; align-items: center; gap: var(--space-4); background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-4);
+  code { flex: 1; font-size: 0.85rem; color: var(--color-text); word-break: break-all; }
+  .copy-btn { padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm); background: var(--color-primary); color: #fff; border: none; cursor: pointer; white-space: nowrap; }
+}

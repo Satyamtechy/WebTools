@@ -1,0 +1,66 @@
+<div class="shadows-page">
+  <div class="controls">
+    <h2>Box Shadow Generator</h2>
+
+    <div class="presets">
+      @for (name of presetNames; track name) {
+        <button class="preset-btn" (click)="applyPreset(name)">{{ name }}</button>
+      }
+    </div>
+
+    <div class="shadow-list">
+      @for (shadow of shadows(); track $index; let i = $index) {
+        <div class="shadow-item">
+          <div class="shadow-header">
+            <span>Shadow {{ i + 1 }}</span>
+            @if (shadows().length > 1) {
+              <button class="remove-btn" (click)="removeShadow(i)">✕</button>
+            }
+          </div>
+
+          <label>
+            Offset X: {{ shadow.offsetX }}px
+            <input type="range" [ngModel]="shadow.offsetX" (ngModelChange)="updateShadow(i, 'offsetX', +$event)" min="-50" max="50">
+          </label>
+          <label>
+            Offset Y: {{ shadow.offsetY }}px
+            <input type="range" [ngModel]="shadow.offsetY" (ngModelChange)="updateShadow(i, 'offsetY', +$event)" min="-50" max="50">
+          </label>
+          <label>
+            Blur: {{ shadow.blur }}px
+            <input type="range" [ngModel]="shadow.blur" (ngModelChange)="updateShadow(i, 'blur', +$event)" min="0" max="100">
+          </label>
+          <label>
+            Spread: {{ shadow.spread }}px
+            <input type="range" [ngModel]="shadow.spread" (ngModelChange)="updateShadow(i, 'spread', +$event)" min="0" max="50">
+          </label>
+          <label>
+            Color
+            <input type="color" [ngModel]="shadow.color" (ngModelChange)="updateShadow(i, 'color', $event)">
+          </label>
+          <label>
+            Opacity: {{ shadow.opacity }}
+            <input type="range" [ngModel]="shadow.opacity" (ngModelChange)="updateShadow(i, 'opacity', +$event)" min="0" max="1" step="0.01">
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" [ngModel]="shadow.inset" (ngModelChange)="updateShadow(i, 'inset', $event)">
+            Inset
+          </label>
+        </div>
+      }
+    </div>
+
+    <button class="add-btn" (click)="addShadow()">+ Add Shadow</button>
+  </div>
+
+  <div class="preview-panel">
+    <div class="preview-box" [style.box-shadow]="cssValue()"></div>
+
+    <div class="output">
+      <pre>{{ cssOutput() }}</pre>
+      <button class="copy-btn" (click)="copy()">
+        {{ copied() ? '✓ Copied!' : 'Copy' }}
+      </button>
+    </div>
+  </div>
+</div>

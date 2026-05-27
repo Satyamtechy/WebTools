@@ -1,0 +1,116 @@
+<section class="page-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Customizer</h3>
+
+      <div class="control-group">
+        <label class="control-label">Color</label>
+        <div class="color-picker-row">
+          <div
+            class="color-swatch"
+            [style.background]="color()"
+            [colorPicker]="color()"
+            (colorPickerChange)="onColorChange($event)"
+            cpPosition="right"
+          ></div>
+          <span class="color-value">{{ color() }}</span>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">
+          Stroke width <span class="control-value">{{ strokeWidth() }}px</span>
+        </label>
+        <input
+          type="range"
+          class="range-slider"
+          min="0.5"
+          max="3"
+          step="0.25"
+          [value]="strokeWidth()"
+          (input)="onStrokeWidthChange($event)"
+          aria-label="Stroke width"
+        />
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">
+          Size <span class="control-value">{{ strokeSize() }}px</span>
+        </label>
+        <input
+          type="range"
+          class="range-slider"
+          min="16"
+          max="48"
+          step="1"
+          [value]="strokeSize()"
+          (input)="onStrokeSizeChange($event)"
+          aria-label="Icon size"
+        />
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">Categories</h3>
+      <ul class="category-list">
+        <li
+          [class.active]="activeCategory() === 'All Icons'"
+          (click)="selectCategory('All Icons')"
+        >All Icons</li>
+        @for (cat of categories; track cat) {
+          <li
+            [class.active]="activeCategory() === cat"
+            (click)="selectCategory(cat)"
+          >{{ cat }}</li>
+        }
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main-content">
+    <div class="content-header">
+      <div class="content-title">
+        <h2>{{ activeCategory() }}</h2>
+        <span class="badge">{{ filteredIcons().length }} icons</span>
+      </div>
+      <div class="content-search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search icons..."
+          aria-label="Search icons"
+          (input)="onSearchInput($event)"
+        />
+      </div>
+    </div>
+
+    <div class="icon-grid">
+      @for (icon of visibleIcons(); track icon.svgName; let i = $index) {
+        <div
+          class="icon-card"
+          [style.animation-delay]="(i % 60) * 20 + 'ms'"
+          (click)="openDetail(icon)"
+        >
+          <div class="icon-svg" [innerHTML]="getSanitizedSvg(icon)"></div>
+          <span class="icon-name">{{ icon.svgName }}</span>
+        </div>
+      }
+    </div>
+    <div #sentinel class="sentinel"></div>
+  </main>
+</section>
+
+@if (showDetail && selectedIcon) {
+  <app-icon-detail-panel
+    [icon]="selectedIcon"
+    [color]="color()"
+    [strokeWidth]="strokeWidth()"
+    (closed)="closeDetail()"
+  />
+}

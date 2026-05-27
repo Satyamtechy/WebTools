@@ -1,0 +1,57 @@
+:host {
+  display: block;
+  padding: var(--space-lg, 24px);
+}
+
+.formatter-container {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h2 { margin-bottom: var(--space-md, 16px); }
+}
+
+.controls {
+  display: flex;
+  gap: var(--space-sm, 8px);
+  margin-bottom: var(--space-md, 16px);
+  flex-wrap: wrap;
+
+  select, button {
+    padding: 8px 16px;
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+
+  button {
+    background: var(--primary, #6c3afd);
+    color: #fff;
+    border: none;
+
+    &.copied { background: #22c55e; }
+    &:hover { opacity: 0.9; }
+  }
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md, 16px);
+
+  textarea {
+    min-height: 400px;
+    padding: 12px;
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    resize: vertical;
+    background: var(--surface, #fafafa);
+    tab-size: 2;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}

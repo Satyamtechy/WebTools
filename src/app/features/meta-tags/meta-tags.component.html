@@ -1,0 +1,59 @@
+<div class="tool-header">
+  <h1>Meta Tag Generator</h1>
+  <p>Generate SEO meta tags, Open Graph, and Twitter Card tags</p>
+</div>
+
+<div class="layout">
+  <div class="controls">
+    <div class="control-group">
+      <label for="title">Title <span class="char-count" [class.warn]="title().length > 60">{{ title().length }}/60</span></label>
+      <input id="title" type="text" [ngModel]="title()" (ngModelChange)="title.set($event)" placeholder="Page title">
+    </div>
+    <div class="control-group">
+      <label for="desc">Description <span class="char-count" [class.warn]="description().length > 160">{{ description().length }}/160</span></label>
+      <textarea id="desc" rows="3" [ngModel]="description()" (ngModelChange)="description.set($event)" placeholder="Page description"></textarea>
+    </div>
+    <div class="control-group">
+      <label for="keywords">Keywords</label>
+      <input id="keywords" type="text" [ngModel]="keywords()" (ngModelChange)="keywords.set($event)" placeholder="comma, separated, keywords">
+    </div>
+    <div class="control-group">
+      <label for="author">Author</label>
+      <input id="author" type="text" [ngModel]="author()" (ngModelChange)="author.set($event)" placeholder="Author name">
+    </div>
+    <div class="control-group">
+      <label for="canonical">Canonical URL</label>
+      <input id="canonical" type="url" [ngModel]="canonicalUrl()" (ngModelChange)="canonicalUrl.set($event)" placeholder="https://example.com/page">
+    </div>
+    <div class="control-group">
+      <label for="ogimage">OG Image URL</label>
+      <input id="ogimage" type="url" [ngModel]="ogImage()" (ngModelChange)="ogImage.set($event)" placeholder="https://example.com/image.jpg">
+    </div>
+    <div class="control-group">
+      <label>Twitter Card Type</label>
+      <div class="type-toggle">
+        <button [class.active]="twitterCard() === 'summary'" (click)="twitterCard.set('summary')">Summary</button>
+        <button [class.active]="twitterCard() === 'summary_large_image'" (click)="twitterCard.set('summary_large_image')">Large Image</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-section">
+    <label>Google Preview</label>
+    <div class="google-preview">
+      <div class="gp-title">{{ title() || 'Page Title' }}</div>
+      <div class="gp-url">{{ canonicalUrl() || 'https://example.com' }}</div>
+      <div class="gp-desc">{{ description() || 'Page description will appear here...' }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="output-section">
+  <div class="output-header">
+    <label>Generated Tags</label>
+    <button class="copy-btn" (click)="copy()" [disabled]="!output()">
+      @if (copied()) { ✓ Copied! } @else { Copy All }
+    </button>
+  </div>
+  <pre class="code-block">{{ output() }}</pre>
+</div>

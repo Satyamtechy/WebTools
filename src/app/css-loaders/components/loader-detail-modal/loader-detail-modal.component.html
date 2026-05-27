@@ -1,0 +1,24 @@
+<div class="modal-backdrop" (click)="close()"></div>
+<div class="modal-container" role="dialog" aria-modal="true" aria-label="Loader detail">
+  <button class="modal-close" (click)="close()" aria-label="Close modal">✕</button>
+
+  <div class="modal-preview" [innerHTML]="safePreview()"></div>
+
+  <div class="modal-actions">
+    <div class="format-toggles">
+      <button class="format-btn" [class.active]="activeFormat() === 'css'" (click)="setFormat('css')">CSS</button>
+      <button class="format-btn" [class.active]="activeFormat() === 'scss'" (click)="setFormat('scss')">SCSS</button>
+      <button class="format-btn" [class.active]="activeFormat() === 'tailwind'" (click)="setFormat('tailwind')">TAILWIND</button>
+    </div>
+    <div class="copy-buttons">
+      <button class="copy-btn" (click)="copyHtml()">Copy HTML</button>
+      <button class="copy-btn" (click)="copyCss()">Copy CSS</button>
+    </div>
+  </div>
+
+  @if (copyFeedback()) {
+    <span class="copy-feedback">{{ copyFeedback() }}</span>
+  }
+
+  <pre class="code-block"><code>{{ formattedCss() }}</code></pre>
+</div>

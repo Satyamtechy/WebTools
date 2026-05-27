@@ -1,13 +1,11 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-loader-detail-popup',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './loader-detail-popup.component.html',
-  styleUrl: './loader-detail-popup.component.scss'
+  styleUrl: './loader-detail-popup.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoaderDetailPopupComponent {
-
-}
+export class LoaderDetailPopupComponent {}

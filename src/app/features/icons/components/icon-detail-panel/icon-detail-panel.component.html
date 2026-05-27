@@ -1,0 +1,44 @@
+<div class="panel-overlay" (click)="onBackdropClick()">
+  <div class="panel-content" (click)="$event.stopPropagation()">
+    <div class="panel-header">
+      <h3>{{ icon().svgName }}</h3>
+      <button class="close-btn" (click)="close()" aria-label="Close panel">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="panel-preview" [innerHTML]="previewSvg()"></div>
+
+    @if (icon().tags?.length || icon().categories?.length) {
+      <div class="panel-tags">
+        @for (tag of icon().tags ?? []; track tag) {
+          <span class="tag">{{ tag }}</span>
+        }
+        @for (cat of icon().categories ?? []; track cat) {
+          <span class="tag tag--category">{{ cat }}</span>
+        }
+      </div>
+    }
+
+    <div class="panel-actions">
+      <button class="btn-primary" [class.copied]="copiedLabel() === 'svg'" (click)="copyToClipboard(svgCode(), 'svg')">
+        {{ copiedLabel() === 'svg' ? '✓ Copied!' : 'Copy SVG' }}
+      </button>
+      <button class="btn-ghost" [class.copied]="copiedLabel() === 'jsx'" (click)="copyToClipboard(jsxCode(), 'jsx')">
+        {{ copiedLabel() === 'jsx' ? '✓ Copied!' : 'Copy JSX' }}
+      </button>
+    </div>
+
+    <div class="panel-code">
+      <div class="code-header">
+        <span>SVG</span>
+        <button class="btn-copy" [class.copied]="copiedLabel() === 'code'" (click)="copyToClipboard(svgCode(), 'code')">
+          {{ copiedLabel() === 'code' ? '✓ Copied!' : 'Copy' }}
+        </button>
+      </div>
+      <pre><code>{{ svgCode() }}</code></pre>
+    </div>
+  </div>
+</div>

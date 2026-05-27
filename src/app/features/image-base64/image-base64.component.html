@@ -1,0 +1,44 @@
+<div class="container">
+  <h1>Image to Base64</h1>
+
+  <div
+    class="drop-zone"
+    [class.dragging]="dragging()"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave()"
+    (drop)="onDrop($event)"
+  >
+    <p>Drag & drop an image here, or</p>
+    <label class="file-btn">
+      Choose File
+      <input type="file" accept="image/*" (change)="onFileSelect($event)" hidden />
+    </label>
+  </div>
+
+  @if (fileInfo(); as info) {
+    <div class="results">
+      <div class="preview-section">
+        <img [src]="preview()" alt="Preview" class="thumbnail" />
+        <div class="info">
+          <p><strong>Name:</strong> {{ info.name }}</p>
+          <p><strong>Type:</strong> {{ info.type }}</p>
+          <p><strong>Original size:</strong> {{ info.size }} bytes</p>
+          <p><strong>Base64 length:</strong> {{ base64().length }} chars</p>
+          <p><strong>Size increase:</strong> {{ (((base64().length - info.size) / info.size) * 100).toFixed(1) }}%</p>
+        </div>
+      </div>
+
+      <div class="output-group">
+        <label>Base64 String</label>
+        <textarea readonly [value]="base64()" rows="4"></textarea>
+        <button (click)="copy('base64')">{{ copiedBase64() ? 'Copied!' : 'Copy Base64' }}</button>
+      </div>
+
+      <div class="output-group">
+        <label>Data URI</label>
+        <textarea readonly [value]="dataUri()" rows="4"></textarea>
+        <button (click)="copy('dataUri')">{{ copiedDataUri() ? 'Copied!' : 'Copy Data URI' }}</button>
+      </div>
+    </div>
+  }
+</div>

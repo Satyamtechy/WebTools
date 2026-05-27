@@ -1,69 +1,61 @@
-import { Component, Inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LoadersService } from './services/loaders.service';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { LoaderCardComponent } from "./components/loader-card/loader-card.component";
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ModalPopupComponent } from '../shared/components/modal-popup/modal-popup.component';
-import { FontsComponent } from '../fonts/fonts.component';
+import { LoaderCardComponent } from './components/loader-card/loader-card.component';
+import { LoaderDetailModalComponent } from './components/loader-detail-modal/loader-detail-modal.component';
+import { LoaderData, LoaderCategory } from '@shared/models/api.models';
+
+const CATEGORIES: LoaderCategory[] = [
+  'All', 'Bubble', 'Graph', 'Line', 'Progress', 'Rect', 'Skeleton', 'Text', 'Circle', 'Objects'
+];
 
 @Component({
-    selector: 'app-css-loaders',
-    standalone: true,
-    templateUrl: './css-loaders.component.html',
-    styleUrl: './css-loaders.component.scss',
-    imports: [CommonModule, MatCardModule, LoaderCardComponent]
+  selector: 'app-css-loaders',
+  standalone: true,
+  templateUrl: './css-loaders.component.html',
+  styleUrl: './css-loaders.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [LoaderCardComponent, LoaderDetailModalComponent],
 })
-export class CssLoadersComponent implements OnInit, OnDestroy{
-  loaders: any = [];
+export class CssLoadersComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly loaderService = inject(LoadersService);
 
-  constructor(private loaderService:LoadersService, private renderer: Renderer2,private sanitizer: DomSanitizer,
-    private dialog: MatDialog){}
-  
+  readonly categories = CATEGORIES;
+  readonly activeCategory = signal<LoaderCategory>('All');
+  readonly loaders = signal<LoaderData[]>([]);
+  readonly selectedLoader = signal<LoaderData | null>(null);
 
   ngOnInit(): void {
-    this.getLoaders()
+    this.loadLoaders();
   }
 
-  getLoaders(){
-    this.loaderService.getLoaders().subscribe({
-      next:(data:any) => {
-        this.loaders = data.value;
-        this.updateLoaderContent();
-      },
-      error(err: any) {
-        console.log(err);
-      },
-    })
+  selectCategory(cat: LoaderCategory): void {
+    this.activeCategory.set(cat);
+    this.loadLoaders();
   }
 
-  updateLoaderContent(){
-    if(this.loaders){
-      this.loaders.forEach((data:{ sanitizedLoaderContent: SafeHtml; html:string, css:string},index:number) => {
-        data.html = data.html.replace(`<span class="loader"`,`<span class="loader-${index+1}"`);
-        console.log(data.html)
-        data.css = data.css.replaceAll(`.loader`,`.loader-${index+1}`)
-        console.log(data.css)
-        data.sanitizedLoaderContent = this.sanitizer.bypassSecurityTrustHtml(data.html) as string;
-      });
-    }
+  openDetail(loader: LoaderData): void {
+    this.selectedLoader.set(loader);
   }
 
-  private addCSSToHead(cssContent: string): void {
-    const styleElement = this.renderer.createElement('style');
-    this.renderer.appendChild(styleElement, this.renderer.createText(cssContent));
-    this.renderer.appendChild(document.head, styleElement);
+  closeDetail(): void {
+    this.selectedLoader.set(null);
   }
 
-  popup(){
-    this.dialog.open(ModalPopupComponent,{
-      width:"50%",
-      height:"70%"
-    });
+  private loadLoaders(): void {
+    this.loaderService
+      .getLoaders(this.activeCategory())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => this.loaders.set(
+        data.filter(l => l.css && l.css.includes('.loader'))
+      ));
   }
-
-  ngOnDestroy(): void {
-  }
-
 }

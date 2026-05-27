@@ -1,0 +1,33 @@
+<div class="json-formatter">
+  <h1>JSON Formatter</h1>
+
+  <textarea [(ngModel)]="input" placeholder="Paste JSON here..." rows="10"></textarea>
+
+  <div class="actions">
+    <button (click)="format()">Format</button>
+    <button (click)="minify()">Minify</button>
+    <button (click)="validate()">Validate</button>
+  </div>
+
+  @if (result().error) {
+    <div class="error">{{ result().error }}</div>
+  }
+
+  @if (result().output) {
+    <div class="output-section">
+      <div class="output-header">
+        <span>Output</span>
+        <button class="copy-btn" (click)="copy()">{{ copied() ? 'Copied!' : 'Copy' }}</button>
+      </div>
+      <pre><code>{{ result().output }}</code></pre>
+    </div>
+  }
+
+  @if (result().stats; as stats) {
+    <div class="stats">
+      <span>Keys: {{ stats.keys }}</span>
+      <span>Depth: {{ stats.depth }}</span>
+      <span>Size: {{ stats.bytes }} bytes</span>
+    </div>
+  }
+</div>

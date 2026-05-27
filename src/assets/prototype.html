@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebDev Tools — UI Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-primary: #6c3afd;
+  --color-primary-hover: #5429e0;
+  --color-primary-light: #f0ecff;
+  --color-text: #0f1729;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #6b7280;
+  --color-border: #e5e7eb;
+  --color-border-light: #f3f4f6;
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f9fafb;
+  --color-surface-hover: #f3f4f6;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+  --shadow-xl: 0 20px 60px rgba(0,0,0,0.1);
+  --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: var(--color-surface); color: var(--color-text); -webkit-font-smoothing: antialiased; }
+
+/* === HEADER === */
+.header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); }
+.header-inner { max-width: 1400px; margin: 0 auto; padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.logo { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 600; text-decoration: none; color: var(--color-text); }
+.logo svg { color: var(--color-primary); }
+.logo span { color: var(--color-primary); }
+
+.nav { display: flex; align-items: center; gap: 8px; }
+.nav a { padding: 8px 16px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; color: var(--color-text-secondary); text-decoration: none; transition: var(--transition); }
+.nav a:hover, .nav a.active { background: var(--color-primary-light); color: var(--color-primary); }
+
+.header-actions { display: flex; align-items: center; gap: 12px; }
+.search-trigger { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: var(--radius-md); border: 1px solid var(--color-border); background: var(--color-surface-secondary); font-size: 13px; color: var(--color-text-tertiary); cursor: pointer; transition: var(--transition); min-width: 240px; }
+.search-trigger:hover { border-color: var(--color-primary); box-shadow: 0 0 0 3px var(--color-primary-light); }
+.search-trigger kbd { margin-left: auto; padding: 2px 6px; border-radius: 4px; background: var(--color-surface); border: 1px solid var(--color-border); font-size: 11px; font-family: var(--font); }
+.btn-ghost { padding: 8px 16px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); background: transparent; font-size: 14px; font-weight: 500; color: var(--color-text); cursor: pointer; transition: var(--transition); }
+.btn-ghost:hover { background: var(--color-surface-hover); }
+.btn-primary { padding: 8px 20px; border-radius: var(--radius-sm); border: none; background: var(--color-primary); font-size: 14px; font-weight: 500; color: #fff; cursor: pointer; transition: var(--transition); }
+.btn-primary:hover { background: var(--color-primary-hover); }
+
+/* === PAGE LAYOUT === */
+.page-section { min-height: calc(100vh - 64px); }
+.page-layout { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 64px); }
+
+/* === SIDEBAR === */
+.sidebar { border-right: 1px solid var(--color-border); padding: 24px; overflow-y: auto; height: calc(100vh - 64px); position: sticky; top: 64px; }
+.sidebar-section { margin-bottom: 32px; }
+.sidebar-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-tertiary); margin-bottom: 16px; }
+.control-group { margin-bottom: 20px; }
+.control-label { display: flex; justify-content: space-between; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 8px; }
+.control-value { color: var(--color-text-tertiary); font-weight: 400; }
+.color-picker-row { display: flex; align-items: center; gap: 10px; }
+.color-swatch { width: 32px; height: 32px; border-radius: var(--radius-sm); border: 2px solid var(--color-border); cursor: pointer; }
+.color-value { font-size: 13px; font-family: 'SF Mono', 'Fira Code', monospace; color: var(--color-text-secondary); }
+.range-slider { width: 100%; height: 4px; -webkit-appearance: none; appearance: none; background: var(--color-border); border-radius: 2px; outline: none; }
+.range-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--color-primary); cursor: pointer; box-shadow: 0 2px 6px rgba(108,58,253,0.3); }
+.category-list { list-style: none; }
+.category-list li { padding: 8px 12px; border-radius: var(--radius-sm); font-size: 14px; color: var(--color-text-secondary); cursor: pointer; transition: var(--transition); }
+.category-list li:hover { background: var(--color-surface-hover); color: var(--color-text); }
+.category-list li.active { background: var(--color-primary-light); color: var(--color-primary); font-weight: 500; }
+
+/* === MAIN CONTENT === */
+.main-content { padding: 32px; overflow-y: auto; }
+.content-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+.content-title { display: flex; align-items: center; gap: 12px; }
+.content-title h2 { font-size: 22px; font-weight: 600; }
+.content-desc { font-size: 14px; color: var(--color-text-secondary); margin-top: 8px; }
+.badge { padding: 4px 10px; border-radius: 20px; background: var(--color-primary-light); color: var(--color-primary); font-size: 12px; font-weight: 500; }
+.content-search { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: var(--radius-md); border: 1px solid var(--color-border); background: var(--color-surface); width: 320px; transition: var(--transition); }
+.content-search:focus-within { border-color: var(--color-primary); box-shadow: 0 0 0 3px var(--color-primary-light); }
+.content-search svg { color: var(--color-text-tertiary); flex-shrink: 0; }
+.search-input { border: none; outline: none; font-size: 14px; width: 100%; font-family: var(--font); color: var(--color-text); background: transparent; }
+
+/* === ICON GRID === */
+.icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 4px; }
+.icon-card { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 12px 14px; border-radius: var(--radius-md); cursor: pointer; transition: var(--transition); gap: 10px; }
+.icon-card:hover { background: var(--color-surface-hover); }
+.icon-card:hover svg { color: var(--color-primary); }
+.icon-card span { font-size: 11px; color: var(--color-text-tertiary); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+.icon-card svg { color: var(--color-text); transition: var(--transition); }
+
+/* === DETAIL PANEL === */
+.detail-panel { position: fixed; inset: 0; z-index: 200; display: none; }
+.detail-panel.open { display: flex; }
+.detail-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); }
+.detail-content { position: absolute; right: 0; top: 0; bottom: 0; width: 480px; background: var(--color-surface); box-shadow: var(--shadow-xl); padding: 32px; overflow-y: auto; animation: slideIn 0.25s ease; }
+@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+.detail-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+.detail-header h3 { font-size: 20px; font-weight: 600; }
+.detail-close { background: none; border: none; cursor: pointer; padding: 8px; border-radius: var(--radius-sm); color: var(--color-text-secondary); transition: var(--transition); }
+.detail-close:hover { background: var(--color-surface-hover); }
+.detail-preview { display: flex; align-items: center; justify-content: center; padding: 48px; background: var(--color-surface-secondary); border-radius: var(--radius-lg); margin-bottom: 24px; }
+.detail-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.tag { padding: 4px 12px; border-radius: 20px; border: 1px solid var(--color-border); font-size: 12px; color: var(--color-text-secondary); }
+.detail-actions { display: flex; gap: 8px; margin-bottom: 24px; }
+.btn-lg { padding: 12px 20px; }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+.detail-code { background: var(--color-surface-secondary); border-radius: var(--radius-md); border: 1px solid var(--color-border); overflow: hidden; }
+.code-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--color-border); }
+.code-header span { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); }
+.btn-copy { background: none; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 4px 10px; font-size: 11px; cursor: pointer; color: var(--color-text-secondary); }
+.detail-code pre { padding: 16px; overflow-x: auto; font-size: 12px; line-height: 1.6; font-family: 'SF Mono', 'Fira Code', monospace; color: var(--color-text-secondary); }
+
+/* === LOADERS PAGE === */
+.loaders-layout { max-width: 1400px; margin: 0 auto; }
+.loader-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 0 32px 64px; }
+.loader-card { border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; transition: var(--transition); }
+.loader-card:hover { box-shadow: var(--shadow-md); border-color: var(--color-primary); transform: translateY(-2px); }
+.loader-preview { height: 160px; display: flex; align-items: center; justify-content: center; background: var(--color-surface-secondary); }
+.loader-actions { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--color-border); justify-content: center; }
+
+/* Demo loaders */
+.demo-spinner { width: 36px; height: 36px; border: 3px solid var(--color-border); border-top-color: var(--color-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.demo-dots { display: flex; gap: 6px; }
+.demo-dots span { width: 10px; height: 10px; border-radius: 50%; background: var(--color-primary); animation: dot 1.4s infinite ease-in-out both; }
+.demo-dots span:nth-child(1) { animation-delay: -0.32s; }
+.demo-dots span:nth-child(2) { animation-delay: -0.16s; }
+@keyframes dot { 0%,80%,100% { transform: scale(0); } 40% { transform: scale(1); } }
+.demo-pulse { width: 36px; height: 36px; border-radius: 50%; background: var(--color-primary); animation: pulse 1.5s infinite; }
+@keyframes pulse { 0% { transform: scale(0.9); opacity: 1; } 100% { transform: scale(1.8); opacity: 0; } }
+.demo-bars { display: flex; gap: 4px; align-items: end; height: 32px; }
+.demo-bars span { width: 4px; background: var(--color-primary); border-radius: 2px; animation: bars 1.2s infinite ease-in-out; }
+.demo-bars span:nth-child(1) { animation-delay: -0.4s; }
+.demo-bars span:nth-child(2) { animation-delay: -0.3s; }
+.demo-bars span:nth-child(3) { animation-delay: -0.2s; }
+.demo-bars span:nth-child(4) { animation-delay: -0.1s; }
+@keyframes bars { 0%,40%,100% { height: 10px; } 20% { height: 32px; } }
+.demo-ring { width: 36px; height: 36px; border: 3px solid var(--color-primary-light); border-radius: 50%; position: relative; }
+.demo-ring::after { content: ''; position: absolute; top: -3px; left: -3px; width: 36px; height: 36px; border: 3px solid transparent; border-top-color: var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
+.demo-bounce { display: flex; gap: 20px; }
+.demo-bounce span { width: 16px; height: 16px; border-radius: 50%; background: var(--color-primary); animation: bounce 1.4s infinite ease-in-out both; }
+.demo-bounce span:nth-child(1) { animation-delay: -0.32s; }
+@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+</style>
+</head>
+<body>
+
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="m3 21 8.02-14.26"/><path d="m12.99 6.74 1.93 3.44"/><path d="M19 12c-3.87 4-10.13 4-14 0"/><path d="m21 21-2.16-3.84"/></svg>
+      <span>WebDev</span> Tools
+    </a>
+    <nav class="nav">
+      <a href="#icons" class="active">Icons</a>
+      <a href="#loaders">CSS Loaders</a>
+      <a href="#colors">Colors</a>
+      <a href="#fonts">Fonts</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-trigger">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        Search tools...
+        <kbd>⌘K</kbd>
+      </div>
+      <button class="btn-ghost">Log In</button>
+      <button class="btn-primary">Sign Up</button>
+    </div>
+  </div>
+</header>
+
+
+
+<!-- ===== ICONS PAGE ===== -->
+<section id="icons" class="page-section">
+  <div class="page-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Customizer</h3>
+        <div class="control-group">
+          <label class="control-label">Color</label>
+          <div class="color-picker-row">
+            <div class="color-swatch" style="background:#6c3afd"></div>
+            <span class="color-value">#6c3afd</span>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Stroke width <span class="control-value">2px</span></label>
+          <input type="range" class="range-slider" min="0.5" max="3" step="0.25" value="2">
+        </div>
+        <div class="control-group">
+          <label class="control-label">Size <span class="control-value">24px</span></label>
+          <input type="range" class="range-slider" min="16" max="48" step="1" value="24">
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Categories</h3>
+        <ul class="category-list">
+          <li class="active">All Icons</li>
+          <li>Accessibility</li>
+          <li>Arrows</li>
+          <li>Charts</li>
+          <li>Communication</li>
+          <li>Design</li>
+          <li>Development</li>
+          <li>Devices</li>
+          <li>Files</li>
+          <li>Layout</li>
+          <li>Medical</li>
+          <li>Navigation</li>
+          <li>Shapes</li>
+          <li>Social</li>
+          <li>Weather</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-header">
+        <div class="content-title">
+          <h2>All Icons</h2>
+          <span class="badge">1,450 icons</span>
+        </div>
+        <div class="content-search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" placeholder="Search icons..." class="search-input">
+        </div>
+      </div>
+
+      <!-- Icon Grid -->
+      <div class="icon-grid">
+        <div class="icon-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4"/><path d="M12 16V8"/></svg><span>arrow-up-circle</span></div>
+        <div class="icon-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg><span>check-square</span></div>
+        <div class="icon-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg><span>download</span></div>
+        <div class="icon-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg><span>check-circle</span></div>
+        <div class="icon-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>home</span></div>
+        <div class="icon-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>search</span></div>
+        <div class="icon-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>user</span></div>
+        <div class="icon-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><span>mail</span></div>
+        <div class="icon-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg><span>settings</span></div>
+        <div class="icon-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>heart</span></div>
+        <div class="icon-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span>bell</span></div>
+        <div class="icon-card"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>activity</span></div>
+      </div>
+    </main>
+  </div>
+</section>
+
+
+
+<!-- ===== ICON DETAIL PANEL (overlay) ===== -->
+<div class="detail-panel" id="detail-panel">
+  <div class="detail-backdrop" onclick="this.parentElement.classList.remove('open')"></div>
+  <div class="detail-content">
+    <div class="detail-header">
+      <h3>arrow-up-circle</h3>
+      <button class="detail-close" onclick="document.getElementById('detail-panel').classList.remove('open')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="detail-preview">
+      <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#6c3afd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4"/><path d="M12 16V8"/></svg>
+    </div>
+    <div class="detail-tags">
+      <span class="tag">arrows</span>
+      <span class="tag">navigation</span>
+      <span class="tag">direction</span>
+    </div>
+    <div class="detail-actions">
+      <button class="btn-primary btn-lg">Copy SVG</button>
+      <button class="btn-ghost btn-lg">Copy JSX</button>
+      <button class="btn-ghost btn-lg">Download PNG</button>
+    </div>
+    <div class="detail-code">
+      <div class="code-header"><span>SVG</span><button class="btn-copy">Copy</button></div>
+      <pre><code>&lt;svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;
+  &lt;circle cx="12" cy="12" r="10"/&gt;
+  &lt;path d="m16 12-4-4-4 4"/&gt;
+  &lt;path d="M12 16V8"/&gt;
+&lt;/svg&gt;</code></pre>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CSS LOADERS PAGE ===== -->
+<section id="loaders" class="page-section" style="display:none">
+  <div class="loaders-layout">
+    <div class="content-header" style="max-width:1400px;margin:0 auto;padding:32px;">
+      <div class="content-title">
+        <h2>CSS Loaders</h2>
+        <span class="badge">120+ loaders</span>
+      </div>
+      <p class="content-desc">Pure CSS loading animations. Click any loader to get the HTML & CSS code.</p>
+    </div>
+    <div class="loader-grid">
+      <div class="loader-card">
+        <div class="loader-preview"><div class="demo-spinner"></div></div>
+        <div class="loader-actions"><button class="btn-ghost btn-sm">HTML</button><button class="btn-ghost btn-sm">CSS</button></div>
+      </div>
+      <div class="loader-card">
+        <div class="loader-preview"><div class="demo-dots"><span></span><span></span><span></span></div></div>
+        <div class="loader-actions"><button class="btn-ghost btn-sm">HTML</button><button class="btn-ghost btn-sm">CSS</button></div>
+      </div>
+      <div class="loader-card">
+        <div class="loader-preview"><div class="demo-pulse"></div></div>
+        <div class="loader-actions"><button class="btn-ghost btn-sm">HTML</button><button class="btn-ghost btn-sm">CSS</button></div>
+      </div>
+      <div class="loader-card">
+        <div class="loader-preview"><div class="demo-bars"><span></span><span></span><span></span><span></span></div></div>
+        <div class="loader-actions"><button class="btn-ghost btn-sm">HTML</button><button class="btn-ghost btn-sm">CSS</button></div>
+      </div>
+      <div class="loader-card">
+        <div class="loader-preview"><div class="demo-ring"></div></div>
+        <div class="loader-actions"><button class="btn-ghost btn-sm">HTML</button><button class="btn-ghost btn-sm">CSS</button></div>
+      </div>
+      <div class="loader-card">
+        <div class="loader-preview"><div class="demo-bounce"><span></span><span></span></div></div>
+        <div class="loader-actions"><button class="btn-ghost btn-sm">HTML</button><button class="btn-ghost btn-sm">CSS</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== INTERACTIVE JS ===== -->
+<script>
+// Navigation
+document.querySelectorAll('.nav a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelectorAll('.nav a').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    document.querySelectorAll('.page-section').forEach(s => s.style.display = 'none');
+    const target = link.getAttribute('href').replace('#', '');
+    const section = document.getElementById(target);
+    if (section) section.style.display = '';
+  });
+});
+
+// Icon click opens detail panel
+document.querySelectorAll('.icon-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.getElementById('detail-panel').classList.add('open');
+  });
+});
+
+// Category select
+document.querySelectorAll('.category-list li').forEach(li => {
+  li.addEventListener('click', () => {
+    document.querySelectorAll('.category-list li').forEach(l => l.classList.remove('active'));
+    li.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

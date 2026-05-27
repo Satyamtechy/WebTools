@@ -1,0 +1,57 @@
+<div class="tool-page">
+  <div class="tool-header">
+    <h1>Gradient Generator</h1>
+    <p>Create beautiful CSS gradients visually</p>
+  </div>
+
+  <div class="layout">
+    <div class="preview-box" [style.background]="cssValue()"></div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>Type</label>
+        <div class="type-toggle">
+          @for (t of types; track t) {
+            <button [class.active]="type() === t" (click)="type.set(t)">{{ t }}</button>
+          }
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>Angle: {{ angle() }}°</label>
+        <input type="range" min="0" max="360" [ngModel]="angle()" (ngModelChange)="angle.set($event)" />
+      </div>
+
+      <div class="control-group">
+        <label>Presets</label>
+        <div class="presets">
+          @for (p of presets; track p) {
+            <button (click)="setPreset(p)">{{ p }}</button>
+          }
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>Color Stops</label>
+        @for (stop of stops(); track $index; let i = $index) {
+          <div class="stop-row">
+            <input type="color" [ngModel]="stop.color" (ngModelChange)="updateStop(i, 'color', $event)" />
+            <input type="range" min="0" max="100" [ngModel]="stop.position" (ngModelChange)="updateStop(i, 'position', '' + $event)" />
+            <span class="stop-pos">{{ stop.position }}%</span>
+            @if (stops().length > 2) {
+              <button class="remove-btn" (click)="removeStop(i)" aria-label="Remove stop">×</button>
+            }
+          </div>
+        }
+        <button class="add-btn" (click)="addStop()">+ Add Stop</button>
+      </div>
+
+      <button class="random-btn" (click)="randomGradient()">🎲 Random</button>
+    </div>
+  </div>
+
+  <div class="output">
+    <code>background: {{ cssValue() }};</code>
+    <button class="copy-btn" (click)="copy()">{{ copied() ? '✓ Copied!' : 'Copy' }}</button>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="transformer">
+  <div class="panel-left">
+    <h1>Snippet Transformer</h1>
+    <p class="subtitle">Paste JSON, CSS, HTML, or a color — get multiple format outputs instantly.</p>
+    <div class="input-header">
+      <label for="snippet-input">Input</label>
+      @if (validationStatus().message) {
+        <span class="badge" [class.valid]="validationStatus().valid" [class.invalid]="!validationStatus().valid">
+          {{ validationStatus().message }}
+        </span>
+      }
+    </div>
+    <textarea
+      id="snippet-input"
+      [ngModel]="input()"
+      (ngModelChange)="onInputChange($event)"
+      placeholder='{"name": "John", "age": 30}  or  .btn { padding: 8px; }  or  <div class="box">  or  #ff6600'
+      rows="20"
+      spellcheck="false"
+    ></textarea>
+  </div>
+
+  <div class="panel-right">
+    <div class="tab-group-header">{{ tabGroup().header }}</div>
+    <div class="tabs">
+      @for (tab of tabGroup().tabs; track tab.id) {
+        <button
+          class="tab"
+          [class.active]="activeTab() === tab.id"
+          (click)="setTab(tab.id)"
+        >{{ tab.label }}</button>
+      }
+    </div>
+    <div class="output-panel">
+      @if (output()) {
+        <div class="output-header">
+          <span class="output-label">{{ activeTab() | uppercase }}</span>
+          <button class="copy-btn" (click)="copy()">
+            @if (copiedTab() === activeTab()) {
+              ✓ Copied!
+            } @else {
+              Copy
+            }
+          </button>
+        </div>
+        <pre><code>{{ output() }}</code></pre>
+      } @else if (input().trim() && !validationStatus().valid) {
+        <div class="error">Invalid input — fix to see outputs.</div>
+      } @else {
+        <div class="placeholder">Paste content on the left to see outputs here.</div>
+      }
+    </div>
+  </div>
+</div>

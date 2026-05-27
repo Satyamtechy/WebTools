@@ -1,0 +1,43 @@
+<div class="regex-tester">
+  <h1>Regex Tester</h1>
+
+  <div class="controls">
+    <div class="pattern-row">
+      <input type="text" [ngModel]="pattern()" (ngModelChange)="pattern.set($event)" placeholder="Enter regex pattern..." class="pattern-input" />
+      <select #presetSelect (change)="applyPreset(presets[presetSelect.selectedIndex - 1])" class="preset-select">
+        <option disabled selected>Presets</option>
+        @for (p of presets; track p.name) {
+          <option>{{ p.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="flags">
+      <label><input type="checkbox" [ngModel]="flagG()" (ngModelChange)="flagG.set($event)" /> g (global)</label>
+      <label><input type="checkbox" [ngModel]="flagI()" (ngModelChange)="flagI.set($event)" /> i (case-insensitive)</label>
+      <label><input type="checkbox" [ngModel]="flagM()" (ngModelChange)="flagM.set($event)" /> m (multiline)</label>
+      <label><input type="checkbox" [ngModel]="flagS()" (ngModelChange)="flagS.set($event)" /> s (dotAll)</label>
+    </div>
+
+    @if (error()) {
+      <div class="error">{{ error() }}</div>
+    }
+  </div>
+
+  <textarea [ngModel]="testString()" (ngModelChange)="testString.set($event)" placeholder="Enter test string..." class="test-input" rows="6"></textarea>
+
+  @if (testString()) {
+    <div class="results">
+      <h2>Results <span class="match-count">{{ matches().length }} match{{ matches().length !== 1 ? 'es' : '' }}</span></h2>
+      <div class="highlighted" [innerHTML]="highlighted()"></div>
+
+      @if (matches().length) {
+        <ul class="match-list">
+          @for (m of matches(); track m.index) {
+            <li><span class="index">Index {{ m.index }}:</span> <code>{{ m.value }}</code></li>
+          }
+        </ul>
+      }
+    </div>
+  }
+</div>

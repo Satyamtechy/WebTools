@@ -1,0 +1,36 @@
+<div class="tool-header">
+  <h1>SVG Optimizer</h1>
+  <p>Paste SVG code to optimize — removes comments, whitespace, metadata, and redundant attributes.</p>
+</div>
+
+<div class="input-section">
+  <textarea [ngModel]="input()" (ngModelChange)="input.set($event)" placeholder="Paste SVG code here..."></textarea>
+</div>
+
+@if (input()) {
+  <div class="stats">
+    <span>Original: {{ originalSize() }} bytes</span>
+    <span>Optimized: {{ optimizedSize() }} bytes</span>
+    <span class="savings">Saved: {{ savings() }}%</span>
+  </div>
+
+  <div class="actions">
+    <button class="copy-btn" (click)="copy()">{{ copied() ? 'Copied!' : 'Copy Optimized SVG' }}</button>
+  </div>
+
+  <div class="preview-grid">
+    <div class="preview-panel">
+      <h3>Original</h3>
+      <div class="preview-box" [innerHTML]="input()"></div>
+    </div>
+    <div class="preview-panel">
+      <h3>Optimized</h3>
+      <div class="preview-box" [innerHTML]="optimized()"></div>
+    </div>
+  </div>
+
+  <div class="output-section">
+    <h3>Optimized Code</h3>
+    <pre>{{ optimized() }}</pre>
+  </div>
+}

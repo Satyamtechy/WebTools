@@ -1,0 +1,25 @@
+<div class="formatter-container">
+  <h2>Code Formatter</h2>
+
+  <div class="controls">
+    <select [ngModel]="selectedLanguage()" (ngModelChange)="selectedLanguage.set($event)">
+      @for (lang of languages; track lang) {
+        <option [value]="lang">{{ lang }}</option>
+      }
+    </select>
+    <button (click)="format()">Format</button>
+    <button (click)="minify()">Minify</button>
+    <button (click)="copy()" [class.copied]="copied()">
+      {{ copied() ? 'Copied!' : 'Copy' }}
+    </button>
+  </div>
+
+  <div class="panels">
+    <textarea
+      placeholder="Paste your code here..."
+      [ngModel]="code()"
+      (ngModelChange)="code.set($event)"
+    ></textarea>
+    <textarea readonly [value]="output()" placeholder="Formatted output..."></textarea>
+  </div>
+</div>

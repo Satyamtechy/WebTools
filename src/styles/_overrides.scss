@@ -1,0 +1,7 @@
+// Third-party component overrides
+
+// ngx-color-picker: ensure popup isn't clipped by overflow containers
+.color-picker {
+  z-index: 1000 !important;
+  position: fixed !important;
+}

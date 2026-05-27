@@ -1,17 +1,16 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from "./shared/components/header/header.component";
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from '@shared/components/header/header.component';
+import { CommandPaletteComponent } from '@shared/components/command-palette/command-palette.component';
 
 @Component({
-    selector: 'app-root',
-    standalone: true,
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss',
-    imports: [CommonModule, RouterOutlet, HeaderComponent, FormsModule, HttpClientModule]
+  selector: 'app-root',
+  standalone: true,
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterOutlet, HeaderComponent, CommandPaletteComponent],
 })
 export class AppComponent {
-  title = 'angular';
+  title = 'WebTools';
 }

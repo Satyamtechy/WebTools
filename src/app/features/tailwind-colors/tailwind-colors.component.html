@@ -1,0 +1,39 @@
+<div class="tool-page">
+  <div class="tool-header">
+    <h1>Tailwind CSS Colors</h1>
+    <p>All Tailwind v3 color families · Click to copy hex</p>
+  </div>
+
+  <div class="controls">
+    <input type="text" class="search-input" placeholder="Filter colors..." [ngModel]="search()" (ngModelChange)="search.set($event)" />
+  </div>
+
+  <div class="color-grid">
+    @for (color of filteredColors(); track color.name) {
+      <div class="color-row">
+        <span class="color-name">{{ color.name }}</span>
+        <div class="shade-cells">
+          @for (shade of shades; track shade) {
+            <button
+              class="shade-cell"
+              [style.background]="color.shades[shade]"
+              [class.copied]="copiedKey() === color.name + '-' + shade"
+              (click)="copy(color.name, shade, color.shades[shade])"
+              [attr.aria-label]="'Copy ' + getClass(color.name, shade) + ' ' + color.shades[shade]">
+              <span class="cell-info">
+                @if (copiedKey() === color.name + '-' + shade) {
+                  <span class="copied-text">Copied!</span>
+                } @else {
+                  <span class="hex">{{ color.shades[shade] }}</span>
+                  <span class="tw-class">{{ getClass(color.name, shade) }}</span>
+                  <span class="rgb">{{ getRgb(color.shades[shade]) }}</span>
+                }
+              </span>
+              <span class="shade-label">{{ shade }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

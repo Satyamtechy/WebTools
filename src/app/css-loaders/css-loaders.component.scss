@@ -1,32 +1,108 @@
-mat-card{
-    height: 300px;
+.loaders-page {
+  padding: var(--space-8);
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.card-item {
-    flex: 0 0 calc(25% - 1rem);
-    max-width: calc(25% - 1rem);
-    margin: 0.5rem;
-    cursor: pointer;
+.content-header {
+  margin-bottom: var(--space-6);
 }
 
-@media (max-width: 992px) {
-    .card-item {
-        flex-basis: calc(33.33% - 1rem);
-        max-width: calc(33.33% - 1rem);
-    }
+.page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
 }
 
-@media (max-width: 768px) {
-    .card-item {
-        flex-basis: calc(50% - 1rem);
-        max-width: calc(50% - 1rem);
-    }
+.badge {
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
 }
 
-@media (max-width: 576px) {
-    .card-item {
-        flex-basis: calc(100% - 1rem);
-        max-width: calc(100% - 1rem);
-    }
+.page-description {
+  color: var(--color-text-secondary);
+  margin-top: var(--space-2);
+  font-size: 0.95rem;
 }
 
+.category-tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: all var(--transition);
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  &.active {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+  }
+}
+
+.loader-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-5);
+}
+
+.loader-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  animation: fadeIn 0.3s ease both;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary);
+  }
+
+  app-loader-card {
+    transform: scale(0.6);
+    transform-origin: center;
+  }
+}
+
+.card-label {
+  position: absolute;
+  bottom: var(--space-3);
+  font-size: 0.7rem;
+  color: var(--color-text-tertiary);
+  text-transform: capitalize;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,99 @@
+:host { display: block; padding: var(--space-6); }
+
+.radius-tool {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  h2, h3 { margin: 0; color: var(--color-text); }
+  h3 { font-size: 0.85rem; color: var(--color-text-secondary); }
+}
+
+.link-toggle label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.sliders { display: flex; flex-direction: column; gap: var(--space-3); }
+
+.slider-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 50px;
+  align-items: center;
+  gap: var(--space-3);
+
+  label { font-size: 0.8rem; color: var(--color-text-secondary); }
+  .value { font-size: 0.8rem; color: var(--color-text-tertiary); text-align: right; }
+  input[type="range"] { width: 100%; accent-color: var(--color-primary); }
+}
+
+.presets {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+
+  button {
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all var(--transition);
+
+    &:hover { background: var(--color-surface-hover); border-color: var(--color-primary); }
+  }
+}
+
+.output {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--color-surface-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+
+  code { flex: 1; font-size: 0.8rem; color: var(--color-text); }
+}
+
+.copy-btn {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--color-primary);
+  color: white;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background var(--transition);
+
+  &:hover { background: var(--color-primary-hover); }
+}
+
+.preview-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+}
+
+.preview-box {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+  transition: border-radius var(--transition), width var(--transition), height var(--transition);
+}
+
+@media (max-width: 768px) {
+  .radius-tool { grid-template-columns: 1fr; }
+}

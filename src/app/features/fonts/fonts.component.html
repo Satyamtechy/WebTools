@@ -1,0 +1,51 @@
+<div class="fonts-container">
+  <h1 class="page-title">Font Pairing Tool</h1>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <h3>Pairings</h3>
+      @for (pair of pairings; track pair.heading; let i = $index) {
+        <button class="pair-btn" [class.active]="selectedIndex() === i" (click)="select(i)">
+          <span class="pair-heading" [style.font-family]="pair.heading">{{ pair.heading }}</span>
+          <span class="pair-body" [style.font-family]="pair.body">{{ pair.body }}</span>
+        </button>
+      }
+    </aside>
+
+    <main class="content">
+      <section class="preview">
+        <h2 [style.font-family]="selected().heading" [style.font-size.px]="headingSize()">
+          {{ customHeading() }}
+        </h2>
+        <p [style.font-family]="selected().body" [style.font-size.px]="bodySize()">
+          {{ customBody() }}
+        </p>
+      </section>
+
+      <section class="controls">
+        <div class="control-group">
+          <label>Custom heading text</label>
+          <input type="text" [ngModel]="customHeading()" (ngModelChange)="customHeading.set($event)" />
+        </div>
+        <div class="control-group">
+          <label>Custom body text</label>
+          <textarea [ngModel]="customBody()" (ngModelChange)="customBody.set($event)"></textarea>
+        </div>
+        <div class="sliders">
+          <div class="control-group">
+            <label>Heading size: {{ headingSize() }}px</label>
+            <input type="range" min="24" max="96" [ngModel]="headingSize()" (ngModelChange)="headingSize.set($event)" />
+          </div>
+          <div class="control-group">
+            <label>Body size: {{ bodySize() }}px</label>
+            <input type="range" min="12" max="36" [ngModel]="bodySize()" (ngModelChange)="bodySize.set($event)" />
+          </div>
+        </div>
+      </section>
+
+      <button class="copy-btn" (click)="copySnippet()">
+        {{ copied() ? '✓ Copied!' : 'Copy CSS + Link Tag' }}
+      </button>
+    </main>
+  </div>
+</div>

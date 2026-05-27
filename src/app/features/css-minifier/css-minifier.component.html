@@ -1,0 +1,30 @@
+<div class="minifier">
+  <h1>CSS Minifier</h1>
+
+  <div class="panels">
+    <div class="panel">
+      <label for="input">Input CSS</label>
+      <textarea id="input" [ngModel]="input()" (ngModelChange)="input.set($event)" placeholder="Paste your CSS here..."></textarea>
+    </div>
+    <div class="panel">
+      <label for="output">Output</label>
+      <textarea id="output" [value]="output()" readonly></textarea>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button (click)="minify()" [disabled]="!input()">Minify</button>
+    <button (click)="beautify()" [disabled]="!input()">Beautify</button>
+    <button (click)="copy()" [disabled]="!output()">
+      @if (copied()) { Copied! } @else { Copy }
+    </button>
+  </div>
+
+  @if (output()) {
+    <div class="stats">
+      <span>Original: {{ originalSize() }} B</span>
+      <span>Output: {{ outputSize() }} B</span>
+      <span>Savings: {{ savings() }}%</span>
+    </div>
+  }
+</div>

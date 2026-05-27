@@ -1,0 +1,36 @@
+<div class="tool-page">
+  <div class="tool-header">
+    <h1>Color Palette Generator</h1>
+    <p>Pick a base color and generate harmonious palettes</p>
+  </div>
+
+  <div class="controls">
+    <label class="color-picker">
+      <input type="color" [ngModel]="baseColor()" (ngModelChange)="baseColor.set($event)" />
+      <span class="color-value">{{ baseColor() }}</span>
+    </label>
+  </div>
+
+  <div class="palettes">
+    @for (palette of palettes(); track palette.name; let pi = $index) {
+      <div class="palette-group">
+        <h3>{{ palette.name }}</h3>
+        <div class="swatches">
+          @for (hex of palette.swatches; track hex; let si = $index) {
+            <button class="swatch" [style.background]="hex" (click)="copySwatch(pi, si)" [attr.aria-label]="'Copy ' + hex">
+              <span class="swatch-label">{{ isCopied(pi, si) ? '✓ Copied!' : hex }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="export-section">
+    <div class="export-header">
+      <h3>Export as CSS Variables</h3>
+      <button class="copy-btn" (click)="copyExport()">{{ copiedKey() === 'export' ? '✓ Copied!' : 'Copy All' }}</button>
+    </div>
+    <pre class="code-block">{{ exportCode() }}</pre>
+  </div>
+</div>
