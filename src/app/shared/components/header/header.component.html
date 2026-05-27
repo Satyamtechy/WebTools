@@ -14,41 +14,18 @@
     <nav class="nav" aria-label="Main navigation">
       <a routerLink="/icons" routerLinkActive="active" class="nav-link">Icons</a>
       <a routerLink="/css-loaders" routerLinkActive="active" class="nav-link">CSS Loaders</a>
-      <div class="nav-dropdown">
-        <button class="nav-link dropdown-trigger" [class.active]="toolsOpen()" (click)="toggleTools()">
-          Tools
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="m6 9 6 6 6-6"/>
-          </svg>
-        </button>
-        @if (toolsOpen()) {
-          <div class="dropdown-backdrop" (click)="closeTools()"></div>
-          <div class="dropdown-menu">
-            <a routerLink="/transformer" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">Snippet Transformer</a>
-            <a routerLink="/colors" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">Colors</a>
-            <a routerLink="/gradients" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">Gradients</a>
-            <a routerLink="/shadows" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">Shadows</a>
-            <a routerLink="/radius" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">Radius</a>
-            <a routerLink="/fonts" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">Fonts</a>
-            <a routerLink="/meta-tags" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">Meta Tags</a>
-            <a routerLink="/regex" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">Regex</a>
-            <a routerLink="/json" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">JSON</a>
-            <a routerLink="/code-formatter" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">Code Formatter</a>
-            <a routerLink="/image-base64" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">Image Base64</a>
-            <a routerLink="/svg-optimizer" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">SVG Optimizer</a>
-            <a routerLink="/css-minifier" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">CSS Minifier</a>
-            <a routerLink="/tailwind-colors" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">Tailwind Colors</a>
-            <a routerLink="/responsive-tester" routerLinkActive="active" class="dropdown-item" (click)="closeTools()">Responsive Tester</a>
-          </div>
-        }
-      </div>
+      <button class="nav-link" [class.active]="toolsOpen()" (click)="toggleTools()">
+        Tools
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </button>
     </nav>
 
     <div class="header-actions">
       <div class="search-trigger" (click)="openPalette()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="8"/>
-          <path d="m21 21-4.3-4.3"/>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
         </svg>
         <span class="search-placeholder">Search tools...</span>
         <kbd>⌘K</kbd>
@@ -67,3 +44,42 @@
     </div>
   </div>
 </header>
+
+<!-- Tools Drawer -->
+@if (toolsOpen()) {
+  <div class="drawer-backdrop" (click)="closeTools()"></div>
+  <aside class="tools-drawer">
+    <div class="drawer-header">
+      <h3>Developer Tools</h3>
+      <button class="drawer-close" (click)="closeTools()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body">
+      <div class="drawer-category">
+        <h4>Transform</h4>
+        <a routerLink="/transformer" routerLinkActive="active" (click)="closeTools()">Snippet Transformer</a>
+        <a routerLink="/code-formatter" routerLinkActive="active" (click)="closeTools()">Code Formatter</a>
+        <a routerLink="/css-minifier" routerLinkActive="active" (click)="closeTools()">CSS Minifier</a>
+        <a routerLink="/svg-optimizer" routerLinkActive="active" (click)="closeTools()">SVG Optimizer</a>
+        <a routerLink="/image-base64" routerLinkActive="active" (click)="closeTools()">Image to Base64</a>
+      </div>
+      <div class="drawer-category">
+        <h4>Design</h4>
+        <a routerLink="/colors" routerLinkActive="active" (click)="closeTools()">Color Palette</a>
+        <a routerLink="/gradients" routerLinkActive="active" (click)="closeTools()">Gradient Generator</a>
+        <a routerLink="/shadows" routerLinkActive="active" (click)="closeTools()">Box Shadow</a>
+        <a routerLink="/radius" routerLinkActive="active" (click)="closeTools()">Border Radius</a>
+        <a routerLink="/tailwind-colors" routerLinkActive="active" (click)="closeTools()">Tailwind Colors</a>
+      </div>
+      <div class="drawer-category">
+        <h4>Utilities</h4>
+        <a routerLink="/json" routerLinkActive="active" (click)="closeTools()">JSON Formatter</a>
+        <a routerLink="/regex" routerLinkActive="active" (click)="closeTools()">Regex Tester</a>
+        <a routerLink="/meta-tags" routerLinkActive="active" (click)="closeTools()">Meta Tag Generator</a>
+        <a routerLink="/fonts" routerLinkActive="active" (click)="closeTools()">Font Pairing</a>
+        <a routerLink="/responsive-tester" routerLinkActive="active" (click)="closeTools()">Responsive Tester</a>
+      </div>
+    </div>
+  </aside>
+}
